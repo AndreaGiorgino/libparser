@@ -2,8 +2,8 @@
 #include <format>
 #include <iostream>
 
-#include "libparser.hxx"
-#include "errors/file_error.hxx"
+#include "libparser/libparser.hxx"
+#include "libparser/errors/file_error.hxx"
 
 static const auto testFilePath { "TestFiles/TestParseFile.txt" };
 static const std::array<parser::token, 53> tokensResult {{
