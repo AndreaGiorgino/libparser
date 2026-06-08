@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.11)
 
 project(
-    libparser
+    parser
     VERSION 0.1.0
     LANGUAGES CXX
 )
@@ -10,9 +10,7 @@ project(
 # Dependencies
 #
 
-include(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Options.cmake
-)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Options.cmake)
 
 #
 # Target
@@ -46,10 +44,4 @@ target_include_directories(
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>/include
-    COMMENT "Copying headers to build directory..."
-)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PostBuild.cmake)
