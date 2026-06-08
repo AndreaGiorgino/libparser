@@ -58,6 +58,8 @@ auto parser::tokens(void) const -> std::generator<token> {
             continue;
         } else if ((int)streamIn.peek() == EOF)
             break;
+
+        co_yield ret;
     };
 
     co_yield token { streamIn.tellg(), std::string { (char)EOF } };

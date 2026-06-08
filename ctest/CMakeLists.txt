@@ -5,6 +5,10 @@
 set(
     SOURCE_FILES
     TestOpenFile.cxx
+    TestOpenFileErrorEmptyString.cxx
+    TestOpenFileErrorFileNotFound.cxx
+    TestOpenFileErrorFileNotRegular.cxx
+    TestParseFile.cxx
 )
 
 create_test_sourcelist(
