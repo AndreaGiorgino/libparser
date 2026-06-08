@@ -7,6 +7,7 @@ Parser library in c++.
 > functionalities might be missing
 
 ## Build
+
 ### Requirements
 
 - [CMake](https://cmake.org/)
@@ -19,4 +20,13 @@ cd libparser
 
 cmake -B .build \
     && cmake --build .build --parallel $(($(nproc) - 1))
+```
+
+#### Testing
+
+```bash
+cmake -B .build -DPARSER_BUILD_TESTING=ON \
+    && cmake --build .build --parallel $(($(nproc) - 1))
+
+ctest --test-dir .build
 ```
