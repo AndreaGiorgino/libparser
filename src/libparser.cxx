@@ -38,7 +38,10 @@ auto parser::tokens(void) const -> std::generator<token> {
         const auto ch = (char)streamIn.get();
         token ret { streamIn.tellg(), std::string { ch } };
 
-        if (std::isspace(ch)) {
+        if (ch == '\n') {
+            co_yield ret;
+            continue;
+        } else if (std::isspace(ch)) {
             while (!streamIn.eof()
                     && std::isspace(streamIn.peek()))
                 ret.literal += (char)streamIn.get();
