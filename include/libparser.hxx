@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * libparser - version 0.1.0
+ * libparser - version 1.0.0
  */
 
 #include <filesystem>
