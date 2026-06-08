@@ -18,11 +18,11 @@ class parser final {
     public: // ctors
         parser(std::string_view sourceFilePath);
 
-        parser(const parser&) noexcept = default;
-        auto operator =(const parser&) noexcept -> parser& = default;
+        parser(const parser&) noexcept = delete;
+        auto operator =(const parser&) noexcept -> parser& = delete;
 
-        parser(parser&&) noexcept = default;
-        auto operator =(parser&&) noexcept -> parser& = default;
+        parser(parser&&) noexcept = delete;
+        auto operator =(parser&&) noexcept -> parser& = delete;
 
         ~parser(void) noexcept = default;
 

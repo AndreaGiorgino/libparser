@@ -6,11 +6,12 @@
 
 namespace fs = std::filesystem;
 
-parser::parser(std::string_view sourceFilePath) :
-    _sourceFilePath(fs::absolute(sourceFilePath)) {
+parser::parser(std::string_view sourceFilePath) {
         if (sourceFilePath.empty())
             throw errors::file_error("Cannot use an empty path.");
-        else if (!fs::exists(_sourceFilePath))
+
+        _sourceFilePath = fs::absolute(sourceFilePath);
+        if (!fs::exists(_sourceFilePath))
             throw errors::file_error(
                     std::format(
                         "Cannot find source file: {:?}.",
