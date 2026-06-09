@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "libparser/libparser.hxx"
+#include "libparser/parser.hxx"
 #include "libparser/errors/file_error.hxx"
 
 static const auto testFilePath { "TestFiles" };
