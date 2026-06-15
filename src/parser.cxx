@@ -1,5 +1,4 @@
 #include <format>
-#include <fstream>
 
 #include "parser.hxx"
 #include "errors/file_error.hxx"
@@ -21,7 +20,6 @@ parser::parser(std::string_view sourceFilePath) {
                 std::format(
                     "Cannot open non-regular file: {:?}",
                     _sourceFilePath.c_str()));
-}
 
 auto parser::tokens(void) const -> std::generator<token> {
     std::ifstream ifs { _sourceFilePath.c_str() };
