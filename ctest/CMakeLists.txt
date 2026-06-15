@@ -8,7 +8,14 @@ set(
     TestOpenFileErrorEmptyString.cxx
     TestOpenFileErrorFileNotFound.cxx
     TestOpenFileErrorFileNotRegular.cxx
-    TestParseFile.cxx
+    TestParseFileGenerator.cxx
+    TestParseFileStreamEof.cxx
+    TestParseFileStreamGet.cxx
+    TestParseFileStreamIgnore.cxx
+    TestParseFileStreamIgnoreMultiple.cxx
+    TestParseFileStreamPeek.cxx
+    TestParseFileStreamSeek.cxx
+    TestParseFileStreamTell.cxx
 )
 
 create_test_sourcelist(
