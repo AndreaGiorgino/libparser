@@ -1,17 +1,18 @@
 #pragma once
 
 /*
- * libparser - version 1.0.0
+ * libparser - version 2.0.0
  */
 
 #include <filesystem>
 #include <generator>
+#include <fstream>
 #include <string>
 
 class parser final {
     public: // definitions
         struct token final {
-            std::streamoff position {};
+            std::streamoff position { -1 };
             std::string literal {};
         };
 
@@ -27,9 +28,18 @@ class parser final {
         ~parser(void) noexcept = default;
 
     public: // methods
-        [[nodiscard]]
-            auto tokens(void) const -> std::generator<token>;
+        [[nodiscard]] auto get(void) -> token;
+        [[nodiscard]] auto peek(void) -> token;
+        auto ignore(size_t count = 1) -> void;
+
+        [[nodiscard]] auto tellg(void) -> std::streamoff;
+        auto seekg(std::streamoff streamoff) -> void;
+        [[nodiscard]] auto eof(void) const -> bool;
+
+        [[nodiscard]] auto tokens(void) -> std::generator<token>;
 
     private: // members
         std::filesystem::path _sourceFilePath {};
+        std::ifstream _ifs {};
+        token _bufferedToken {};
 };

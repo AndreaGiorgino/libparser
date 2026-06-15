@@ -21,47 +21,77 @@ parser::parser(std::string_view sourceFilePath) {
                     "Cannot open non-regular file: {:?}",
                     _sourceFilePath.c_str()));
 
-auto parser::tokens(void) const -> std::generator<token> {
-    std::ifstream ifs { _sourceFilePath.c_str() };
-    if (!ifs)
+    _ifs = std::ifstream { _sourceFilePath };
+    if (!_ifs)
         throw errors::file_error(
                 std::format(
                     "Cannot open file: {:?}",
                     _sourceFilePath.c_str()));
+}
 
-    while (true) {
-        if (ifs.eof())
-            break;
+auto parser::get(void) -> token {
+    if (_ifs.eof())
+        return token { -1, std::string { (char)EOF } };
+    else if (_ifs.tellg() == _bufferedToken.position - 1)
+        return _bufferedToken;
 
-        const auto ch = (char)ifs.get();
-        token ret { ifs.tellg(), std::string { ch } };
+    _bufferedToken.position = _ifs.tellg();
 
-        if (ch == '\n') {
-            co_yield ret;
-            continue;
-        } else if (std::isspace(ch)) {
-            while (!ifs.eof()
-                    && std::isspace(ifs.peek()))
-                ret.literal += (char)ifs.get();
-            co_yield ret;
-            continue;
-        } else if (std::isalpha(ch)) {
-            while (!ifs.eof()
-                    && std::isalnum(ifs.peek()))
-                ret.literal += (char)ifs.get();
-            co_yield ret;
-            continue;
-        } else if (std::isdigit(ch)) {
-            while (!ifs.eof()
-                    && std::isdigit(ifs.peek()))
-                ret.literal += (char)ifs.get();
-            co_yield ret;
-            continue;
-        } else if ((int)ifs.peek() == EOF)
-            break;
+    const auto ch { (char)_ifs.get() };
+    _bufferedToken.literal = std::string { ch };
 
-        co_yield ret;
-    };
+    if (ch == '\n')
+        // newline
+        return _bufferedToken;
+    else if (std::isspace(ch)) {
+        // space
+        while (!_ifs.eof()
+                && std::isspace(_ifs.peek()))
+            _bufferedToken.literal += (char)_ifs.get();
+        return _bufferedToken;
+    } else if (std::isalpha(ch)) {
+        // alphanumeric
+        while (!_ifs.eof()
+                && std::isalnum(_ifs.peek()))
+            _bufferedToken.literal += (char)_ifs.get();
+        return _bufferedToken;
+    } else if (std::isdigit(ch)) {
+        // numeric
+        while (!_ifs.eof()
+                && std::isdigit(_ifs.peek()))
+            _bufferedToken.literal += (char)_ifs.get();
+        return _bufferedToken;
+    }
 
-    co_yield token { ifs.tellg(), std::string { (char)EOF } };
+    // symbol
+    return _bufferedToken;
+}
+
+auto parser::peek(void) -> token {
+    (void)get();
+
+    _ifs.seekg(_bufferedToken.position - 1);
+    return _bufferedToken;
+}
+
+auto parser::ignore(size_t count) -> void {
+    for (size_t i {}; i < count; i++)
+        (void)get();
+}
+
+auto parser::tellg(void) -> std::streamoff {
+    return _ifs.tellg();
+}
+
+auto parser::seekg(std::streamoff streamoff) -> void {
+    _ifs.seekg(streamoff);
+}
+
+auto parser::eof(void) const -> bool {
+    return _ifs.eof();
+}
+
+auto parser::tokens(void) -> std::generator<token> {
+    while (!_ifs.eof())
+        co_yield get();
 }
