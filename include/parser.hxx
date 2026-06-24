@@ -9,8 +9,18 @@
 #include <fstream>
 #include <string>
 
+/**
+ * @class parser
+ * @brief Represents the parser
+ *
+ */
 class parser final {
     public: // definitions
+        /**
+         * @class token
+         * @brief Represents the parsed part
+         *
+         */
         struct token final {
             std::streamoff position { -1 };
             std::string literal {};
@@ -19,24 +29,58 @@ class parser final {
     public: // ctors
         parser(std::string_view sourceFilePath);
 
-        parser(const parser&) noexcept = delete;
-        auto operator =(const parser&) noexcept -> parser& = delete;
+        parser(const parser&) = delete;
+        auto operator =(const parser&) = delete;
 
-        parser(parser&&) noexcept = delete;
-        auto operator =(parser&&) noexcept -> parser& = delete;
+        parser(parser&&) = delete;
+        auto operator =(parser&&) = delete;
 
-        ~parser(void) noexcept = default;
+        ~parser(void) = default;
 
     public: // methods
-        [[nodiscard]] auto get(void) -> token;
-        [[nodiscard]] auto peek(void) -> token;
+        /**
+         * @brief Get the next token
+         */
+        [[nodiscard]]
+            auto get(void) -> token;
+
+        /**
+         * @brief Peek the next token
+         */
+        [[nodiscard]]
+            auto peek(void) -> token;
+
+        /**
+         * @brief Ignore the next tokens
+         *
+         * @param count The count of tokens to ignore
+         */
         auto ignore(size_t count = 1) -> void;
 
-        [[nodiscard]] auto tellg(void) -> std::streamoff;
-        auto seekg(std::streamoff streamoff) -> void;
-        [[nodiscard]] auto eof(void) const -> bool;
+        /**
+         * @brief Get the stream offset of the file being parsed
+         */
+        [[nodiscard]]
+            auto tellg(void) -> std::streamoff;
 
-        [[nodiscard]] auto tokens(void) -> std::generator<token>;
+        /**
+         * @brief Set the stream offset of the file being parsed
+         *
+         * @param streamoff The offset to set the file stream to
+         */
+        auto seekg(std::streamoff streamoff) -> void;
+
+        /**
+         * @brief Get if the file stream has reached eof
+         */
+        [[nodiscard]]
+            auto eof(void) const -> bool;
+
+        /**
+         * @brief Get the tokens in a sequence
+         */
+        [[nodiscard]]
+            auto tokens(void) -> std::generator<token>;
 
     private: // members
         std::filesystem::path _sourceFilePath {};
