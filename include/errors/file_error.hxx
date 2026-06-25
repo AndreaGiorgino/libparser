@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace errors {
+namespace libparser::errors {
     /**
      * @class file_error
      * @brief Represents a file error
@@ -29,4 +29,4 @@ namespace errors {
         private:
             std::string _errorMessage {};
     };
-} // namespace errors
+} // namespace libparser::errors

@@ -2,7 +2,7 @@
 
 #include "errors/file_error.hxx"
 
-namespace errors {
+namespace libparser::errors {
     file_error::file_error(std::string_view errorMessage) noexcept {
         _errorMessage = std::format("-- File error: {}", errorMessage);
     }
@@ -10,4 +10,4 @@ namespace errors {
     auto file_error::what(void) const noexcept -> const char* {
         return _errorMessage.data();
     }
-} // namespace errors
+} // namespace libparser::errors
