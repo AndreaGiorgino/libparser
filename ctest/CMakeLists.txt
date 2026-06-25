@@ -24,6 +24,13 @@ create_test_sourcelist(
     ${SOURCE_FILES}
 )
 
+#
+# Target
+#
+
+set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(
     CommonCxxTests
     ${TEST_SOURCELIST}
