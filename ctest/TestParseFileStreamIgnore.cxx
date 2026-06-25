@@ -1,13 +1,12 @@
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileStream.txt" };
-static const parser::token tokenResult { 1, "include" };
+static constexpr auto testFilePath { "TestFiles/TestParseFileStream.txt" };
+static constexpr libparser::parser::token tokenResult { 1, "include" };
 
 auto TestParseFileStreamIgnore(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     p.ignore();
 

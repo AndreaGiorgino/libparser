@@ -1,16 +1,15 @@
 #include <array>
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileStream.txt" };
-static const std::array<parser::token, 2> tokensResult {{
+static constexpr auto testFilePath { "TestFiles/TestParseFileStream.txt" };
+static constexpr std::array<libparser::parser::token, 2> tokensResult {{
     { 0, "#" }, { 1, "include" },
 }};
 
 auto TestParseFileStreamGet(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     size_t i {};
     {

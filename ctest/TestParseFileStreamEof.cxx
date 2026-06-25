@@ -1,34 +1,33 @@
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileStream.txt" };
-static const parser::token tokenResult { 111, std::string { (char)EOF } };
+static constexpr auto testFilePath { "TestFiles/TestParseFileStream.txt" };
 
 auto TestParseFileStreamEof(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     {
         const auto isEof { p.eof() };
         if (isEof) {
             std::println(std::cerr,
                     "-- EOF not matching the expected result: "
-                    "{} expected, got {} instead.",
-                    false, isEof);
+                    "{} expected, got {} instead (streamoff: {}).",
+                    false, isEof, p.tellg());
             return 1;
         }
     }
 
-    for ([[maybe_unused]] const auto& token : p.tokens()) {}
+    while (!p.eof())
+        p.ignore();
 
     {
         const auto isEof { p.eof() };
         if (!isEof) {
             std::println(std::cerr,
                     "-- EOF not matching the expected result: "
-                    "{} expected, got {} instead.",
-                    true, isEof);
+                    "{} expected, got {} instead (streamoff: {}).",
+                    true, isEof, p.tellg());
             return 1;
         }
     }

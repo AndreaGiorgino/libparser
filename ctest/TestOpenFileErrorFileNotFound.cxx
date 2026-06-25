@@ -3,12 +3,12 @@
 #include "libparser/parser.hxx"
 #include "libparser/errors/file_error.hxx"
 
-static const auto testFilePath { "TestFiles/TestFileNotFound.txt" };
+static constexpr auto testFilePath { "TestFiles/TestFileNotFound.txt" };
 
 auto TestOpenFileErrorFileNotFound(int, char**) -> int {
     try {
-        parser p { testFilePath };
-    } catch (const errors::file_error& err) {
+        libparser::parser p { testFilePath };
+    } catch (const libparser::errors::file_error& err) {
         return 0;
     } catch (const std::exception& err){
         std::cerr << err.what() << std::endl;

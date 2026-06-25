@@ -1,13 +1,12 @@
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileStream.txt" };
-static const auto positionResult { 2 };
+static constexpr auto testFilePath { "TestFiles/TestParseFileStream.txt" };
+static constexpr auto positionResult { 2 };
 
 auto TestParseFileStreamTell(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     p.ignore();
 

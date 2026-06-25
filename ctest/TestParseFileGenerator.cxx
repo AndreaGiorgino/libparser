@@ -1,11 +1,10 @@
 #include <array>
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileGenerator.txt" };
-static const std::array<parser::token, 56> tokensResult {{
+static constexpr auto testFilePath { "TestFiles/TestParseFileGenerator.txt" };
+static constexpr std::array<libparser::parser::token, 56> tokensResult {{
     { 0,   "#"      }, { 1,   "include" }, { 8,   " "     }, { 9,  "<"       },
     { 10,  "print"  }, { 15,  ">"       }, { 16,  "\n"    }, { 17,  "\n"      },
     { 18,  "auto"   }, { 22,  " "       }, { 23,  "main"  }, { 27,  "("       },
@@ -18,13 +17,13 @@ static const std::array<parser::token, 56> tokensResult {{
     { 76,  "("      }, { 77,  "\""      }, { 78,  "Hello" }, { 83,  ","       },
     { 84,  " "      }, { 85,  "world"   }, { 90,  "!"     }, { 91,  "\""      },
     { 92,  ")"      }, { 93,  ";"       }, { 94,  "\n"    }, { 95,  "    "    },
-    { 99, "return" }, { 105, " "       }, { 106, "0"     }, { 107, ";"       },
+    { 99, "return"  }, { 105, " "       }, { 106, "0"     }, { 107, ";"       },
     { 108, "\n"     }, { 109, "}"       }, { 110, "\n"    },
     { 111, std::string { (char)EOF } },
 }};
 
 auto TestParseFileGenerator(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     size_t i {};
     for (const auto& token : p.tokens()) {

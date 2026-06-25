@@ -1,13 +1,12 @@
-#include <format>
 #include <iostream>
 
 #include "libparser/parser.hxx"
 
-static const auto testFilePath { "TestFiles/TestParseFileStream.txt" };
-static const parser::token tokenResult { 0, "#" };
+static constexpr auto testFilePath { "TestFiles/TestParseFileStream.txt" };
+static constexpr libparser::parser::token tokenResult { 0, "#" };
 
 auto TestParseFileStreamSeek(int, char**) -> int {
-    parser p { testFilePath };
+    libparser::parser p { testFilePath };
 
     {
         const auto token { p.get() };
