@@ -33,8 +33,10 @@ namespace libparser {
     auto parser::get(void) -> token {
         if (_ifs.eof())
             return token { -1, std::string { (char)EOF } };
-        else if (_ifs.tellg() == _bufferedToken.position - 1)
+        else if (_ifs.tellg() == _bufferedToken.position) {
+            _ifs.seekg(_bufferedToken.literal.size());
             return _bufferedToken;
+        }
 
         _bufferedToken.position = _ifs.tellg();
 
@@ -71,7 +73,7 @@ namespace libparser {
     auto parser::peek(void) -> token {
         (void)get();
 
-        _ifs.seekg(_bufferedToken.position - 1);
+        _ifs.seekg(_bufferedToken.position);
         return _bufferedToken;
     }
 
