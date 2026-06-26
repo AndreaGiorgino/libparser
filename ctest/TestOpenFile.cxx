@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "libparser/parser.hxx"
-#include "libparser/errors/file_error.hxx"
 
 static constexpr auto testFilePath { "TestFiles/TestOpenFile.txt" };
 

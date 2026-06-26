@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 
 project(
     parser
-    VERSION 2.0.0
+    VERSION 2.1.1
     LANGUAGES CXX
 )
 
@@ -44,7 +44,9 @@ target_compile_options(
 
 target_include_directories(
     ${PROJECT_NAME}
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
 )
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/PostBuild.cmake)
