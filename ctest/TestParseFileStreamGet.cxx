@@ -11,33 +11,28 @@ static constexpr std::array<libparser::parser::token, 2> tokensResult {{
 auto TestParseFileStreamGet(int, char**) -> int {
     libparser::parser p { testFilePath };
 
-    size_t i {};
-    {
-        const auto token { p.get() };
-        if (const auto& tokenResult { tokensResult[i++] };
-                token.position != tokenResult.position
-                || token.literal != tokenResult.literal) {
-            std::println(std::cerr,
-                    "-- Token not matching the expected result: "
-                    "\"{{ {}, {:?} }}\" expected, got \"{{ {}, {:?} }}\" instead.",
-                    tokenResult.position, tokenResult.literal,
-                    token.position, token.literal);
-            return 1;
+    const auto lambda {
+        [&](size_t resultindex) -> int {
+            const auto token { p.get() };
+            if (const auto& tokenResult { tokensResult[resultindex] };
+                    token.position != tokenResult.position
+                    || token.literal != tokenResult.literal) {
+                std::println(std::cerr,
+                        "-- Token not matching the expected result: "
+                        "\"{{ {}, {:?} }}\" expected, got "
+                        "\"{{ {}, {:?} }}\" instead.",
+                        tokenResult.position, tokenResult.literal,
+                        token.position, token.literal);
+                return 1;
+            }
+            return 0;
         }
-    }
-    {
-        const auto token { p.get() };
-        if (const auto& tokenResult { tokensResult[i++] };
-                token.position != tokenResult.position
-                || token.literal != tokenResult.literal) {
-            std::println(std::cerr,
-                    "-- Token not matching the expected result: "
-                    "\"{{ {}, {:?} }}\" expected, got \"{{ {}, {:?} }}\" instead.",
-                    tokenResult.position, tokenResult.literal,
-                    token.position, token.literal);
-            return 1;
-        }
-    }
+    };
+
+    for (size_t i {}; i < tokensResult.size(); i++)
+        if (const auto ret { lambda(i) };
+                ret != 0)
+            return ret;
 
     return 0;
 }

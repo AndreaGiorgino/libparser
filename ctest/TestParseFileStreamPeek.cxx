@@ -8,30 +8,29 @@ static constexpr libparser::parser::token tokenResult { 0, "#" };
 auto TestParseFileStreamPeek(int, char**) -> int {
     libparser::parser p { testFilePath };
 
-    {
-        const auto token { p.peek() };
-        if (token.position != tokenResult.position
-                || token.literal != tokenResult.literal) {
-            std::println(std::cerr,
-                    "-- Token not matching the expected result: "
-                    "\"{{ {}, {:?} }}\" expected, got \"{{ {}, {:?} }}\" instead.",
-                    tokenResult.position, tokenResult.literal,
-                    token.position, token.literal);
-            return 1;
+    const auto lambda {
+        [&](void) -> int {
+            const auto token { p.peek() };
+            if (token.position != tokenResult.position
+                    || token.literal != tokenResult.literal) {
+                std::println(std::cerr,
+                        "-- Token not matching the expected result: "
+                        "\"{{ {}, {:?} }}\" expected, got "
+                        "\"{{ {}, {:?} }}\" instead.",
+                        tokenResult.position, tokenResult.literal,
+                        token.position, token.literal);
+                return 1;
+            }
+            return 0;
         }
-    }
-    {
-        const auto token { p.peek() };
-        if (token.position != tokenResult.position
-                || token.literal != tokenResult.literal) {
-            std::println(std::cerr,
-                    "-- Token not matching the expected result: "
-                    "\"{{ {}, {:?} }}\" expected, got \"{{ {}, {:?} }}\" instead.",
-                    tokenResult.position, tokenResult.literal,
-                    token.position, token.literal);
-            return 1;
-        }
-    }
+    };
+
+    if (const auto ret { lambda() };
+            ret != 0)
+        return ret;
+    if (const auto ret { lambda() };
+            ret != 0)
+        return ret;
 
     return 0;
 }
