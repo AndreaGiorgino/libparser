@@ -1,7 +1,7 @@
 #include <format>
 
-#include "parser.hxx"
-#include "errors/file_error.hxx"
+#include "libparser/parser.hxx"
+#include "libparser/errors/file_error.hxx"
 
 namespace fs = std::filesystem;
 

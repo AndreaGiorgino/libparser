@@ -1,6 +1,6 @@
 #include <format>
 
-#include "errors/file_error.hxx"
+#include "libparser/errors/file_error.hxx"
 
 namespace libparser::errors {
     file_error::file_error(std::string_view errorMessage) noexcept {
