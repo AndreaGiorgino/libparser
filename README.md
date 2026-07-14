@@ -25,9 +25,22 @@ cmake -B .build \
 ### Testing
 
 ```bash
-cmake -B .build -DPARSER_BUILD_TESTING=ON \
-    && cmake --build .build --parallel $(($(nproc) - 1)) \
-    && ctest --test-dir .build
+cmake -B build \
+    -DPARSER_BUILD_TESTING=ON \
+    && cmake --build build --parallel $(($(nproc) - 1)) \
+    && ctest --test-dir build 
+```
+
+### Example
+
+```bash
+cmake -B build \
+    -DPARSER_BUILD_EXAMPLE=ON \
+    && cmake --build build --parallel $(($(nproc) - 1)) \
+    && ctest --test-dir build 
+
+cd example
+./build/example
 ```
 
 ## Usage
