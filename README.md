@@ -1,6 +1,6 @@
 # libparser
 
-Parser library in c++.
+Parser library in cpp23
 
 > [!IMPORTANT]
 > Since this library is still in development, it may not work correctly or some
