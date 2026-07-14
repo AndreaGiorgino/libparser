@@ -22,7 +22,7 @@ cmake -B .build \
     && cmake --build .build --parallel $(($(nproc) - 1))
 ```
 
-#### Testing
+### Testing
 
 ```bash
 cmake -B .build -DPARSER_BUILD_TESTING=ON \
