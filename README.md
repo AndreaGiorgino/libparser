@@ -18,8 +18,7 @@ Parser library in cpp23
 git clone https://github.com/giorgi.page/libparser.git
 cd libparser
 
-cmake -B .build \
-    && cmake --build .build --parallel $(($(nproc) - 1))
+./build.sh
 ```
 
 ### Testing
