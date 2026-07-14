@@ -1,4 +1,5 @@
 #include <iostream>
+#include <print>
 
 #include "libparser/errors/file_error.hxx"
 #include "libparser/parser.hxx"
@@ -11,10 +12,8 @@ auto main(void) -> int {
     try {
         parser p {filepath};
         for (const auto& token : p.tokens())
-            std::cout << "{"
-                      << "\n  .position = " << token.position
-                      << "\n  .literal  = " << std::quoted(token.literal)
-                      << "\n}" << std::endl;
+            std::println(std::cout, "(position = {: >3}, literal = {:?})",
+                token.position, token.literal);
     } catch (const errors::file_error& ex) {
         std::cerr << "parser file error: " << ex.what() << std::endl;
     } catch (const std::exception& ex) {
