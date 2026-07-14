@@ -77,8 +77,8 @@ namespace libparser {
         return _bufferedToken;
     }
 
-    auto parser::ignore(size_t count) -> void {
-        for (size_t i {}; i < count; i++)
+    auto parser::ignore(size_t n) -> void {
+        for (size_t i {}; i < n; i++)
             (void)get();
     }
 

@@ -52,27 +52,27 @@ namespace libparser {
                 auto peek(void) -> token;
 
             /**
-             * @brief Ignore the next tokens
+             * @brief Ignore the next token/s
              *
-             * @param count The count of tokens to ignore
+             * @param count The number of tokens to ignore
              */
-            auto ignore(size_t count = 1) -> void;
+            auto ignore(size_t n = 1) -> void;
 
             /**
-             * @brief Get the stream offset of the file being parsed
+             * @brief Get the stream offset
              */
             [[nodiscard]]
                 auto tellg(void) -> std::streamoff;
 
             /**
-             * @brief Set the stream offset of the file being parsed
+             * @brief Set the stream offset
              *
-             * @param streamoff The offset to set the file stream to
+             * @param streamoff The offset to set the stream to
              */
             auto seekg(std::streamoff streamoff) -> void;
 
             /**
-             * @brief Get if the file stream has reached eof
+             * @brief Check if the stream has reached eof
              */
             [[nodiscard]]
                 auto eof(void) const -> bool;
