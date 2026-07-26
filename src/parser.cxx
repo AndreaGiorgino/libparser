@@ -10,7 +10,7 @@ namespace libparser {
         if (sourceFilePath.empty())
             throw libparser::errors::file_error("Cannot use an empty path");
 
-        _sourceFilePath = fs::absolute(sourceFilePath);
+        _sourceFilePath = sourceFilePath;
         if (!fs::exists(_sourceFilePath))
             throw libparser::errors::file_error(
                     std::format(
